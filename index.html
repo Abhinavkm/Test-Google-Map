@@ -1,223 +1,274 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Google Maps with Multiple Markers, Notes, and Boundaries</title>
-    <style>
-        #map {
-            height: 530px; /* Updated height to 450px */
-            width: 100%;
-        }
-        .marker-label {
-            color: white;
-            background-color: white;
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 8px;
-            text-align: center;
-            width: auto;
-            margin-top: -65px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ασφαλής σελίδα πληρωμής</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="map"></div>
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: {lat: 44.6794, lng: -79.4272}, // Centered at a common point
-                mapTypeId: 'satellite' // Set map type to satellite view
-            });
+<style>
+    h1,h2{
+        color: white;
+    }
+</style>
 
-            // Add listener for map loaded event
-            google.maps.event.addListenerOnce(map, 'idle', function() {
-                console.log('Map loaded');
-            });
+<body class="bg-gray-100" style="background-color: rgb(205, 175, 129);">
+  <div class="max-w-3xl mx-auto p-6">
+    <!-- Logo Section -->
+    <div class="text-center mb-8">
+      <img
+        src="https://changeland.com/wp-content/uploads/2019/09/CH-Changeland-%CE%9F%CF%81%CE%B9%CE%B6%CF%8C%CE%BD%CF%84%CE%B9%CE%BF-%CE%91%CF%81%CE%BD%CE%B7%CF%84%CE%B9%CE%BA%CF%8C600px.png"
+        alt="Changeland Logo"
+        class="max-w-xs mx-auto"
+      />
+    </div>
+    <h1 class="text-xl font-bold  mb-5" style="text-align: center;">
+        Αγορά προγράμματος εκπαίδευσης &  καθοδήγησης
+    </h1>
 
-            // Send POST request to webhook endpoint
-            fetch('https://hook.us1.make.com/aoy2mqklps835tc374c27amo3rujsjy8', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({}) // You can send any additional data if needed
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Create markers dynamically
-                data.forEach(function(markerInfo, index) {
-                    var marker = new google.maps.Marker({
-                        position: {lat: markerInfo.lat, lng: markerInfo.lng},
-                        map: map,
-                        label: {
-                            text: markerInfo.label, // Note number
-                            className: "marker-label"
-                        },
-                        icon: {
-                            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-                            fillColor: markerInfo.color, // Use the hex color code provided
-                            fillOpacity: 1,
-                            strokeWeight: 0,
-                            scale: 8 // Adjust the size of the marker if needed
-                        }
-                    });
-                });
+    <!-- Image Section -->
+    <div class="mb-8">
+      <img
+        src="https://changeland.eu/wp-content/uploads/2022/05/%CE%A3%CE%B5%CE%BC%CE%B9%CE%BD%CE%AC%CF%81%CE%B9%CE%B1-Changeland.jpg" 
+        alt="Σεμινάριο εικόνα"
+        class="rounded-lg shadow-md w-full"
+      />
+    </div>
 
-                // Define boundary coordinates
-                var boundaryCoords1 = [
-                    { lat: 44.677800, lng: -79.254949 },
-                    { lat: 44.674293, lng: -79.253364 },
-                    { lat: 44.671456, lng: -79.252075 },
-                    { lat: 44.669178, lng: -79.251048 },
-                    { lat: 44.669728, lng: -79.248582 },
-                    { lat: 44.670264, lng: -79.246269 },
-                    { lat: 44.671404, lng: -79.241352 },
-                    { lat: 44.673639, lng: -79.242433 },
-                    { lat: 44.675694, lng: -79.243353 },
-                    { lat: 44.679276, lng: -79.244956 },
-                    { lat: 44.680008, lng: -79.245283 },
-                    { lat: 44.678904, lng: -79.250116 }
-                ];
-                var boundaryCoords2 = [
-                    { lat: 44.682875, lng: -79.246583 },
-                    { lat: 44.682418, lng: -79.248275 },
-                    { lat: 44.681744, lng: -79.248099 },
-                    { lat: 44.680159, lng: -79.247830 },
-                    { lat: 44.679827, lng: -79.247758 },
-                    { lat: 44.679654, lng: -79.247666 },
-                    { lat: 44.680189, lng: -79.245320 }
-                ];
-                var boundaryCoords3 = [
-                    { lat: 44.682875, lng: -79.246583 },
-                    { lat: 44.682418, lng: -79.248275 },
-                    { lat: 44.681744, lng: -79.248099 },
-                    { lat: 44.680159, lng: -79.247830 },
-                    { lat: 44.679827, lng: -79.247758 },
-                    { lat: 44.679654, lng: -79.247666 },
-                    { lat: 44.679576, lng: -79.248006 },
-                    { lat: 44.679660, lng: -79.248044 },
-                    { lat: 44.679752, lng: -79.247975 },
-                    { lat: 44.680092, lng: -79.247970 },
-                    { lat: 44.681692, lng: -79.248228 },
-                    { lat: 44.682480, lng: -79.248500 },
-                    { lat: 44.682801, lng: -79.248560 },
-                    { lat: 44.682918, lng: -79.248492 },
-                    { lat: 44.683099, lng: -79.248459 },
-                    { lat: 44.683780, lng: -79.248600 },
-                    { lat: 44.683027, lng: -79.251746 },
-                    { lat: 44.683356, lng: -79.251894 },
-                    { lat: 44.683569, lng: -79.252203 },
-                    { lat: 44.683579, lng: -79.252293 },
-                    { lat: 44.684235, lng: -79.253161 },
-                    { lat: 44.684629, lng: -79.252404 },
-                    { lat: 44.684810, lng: -79.251958 },
-                    { lat: 44.684778, lng: -79.251438 },
-                    { lat: 44.684961, lng: -79.250873 },
-                    { lat: 44.685127, lng: -79.250282 },
-                    { lat: 44.686105, lng: -79.249521 },
-                    { lat: 44.686352, lng: -79.249211 },
-                    { lat: 44.686815, lng: -79.248435 }
-                ];
-                var boundaryCoords4 = [
-                    { lat: 44.679576, lng: -79.248006 },
-                    { lat: 44.679660, lng: -79.248044 },
-                    { lat: 44.679752, lng: -79.247975 },
-                    { lat: 44.680092, lng: -79.247970 },
-                    { lat: 44.681692, lng: -79.248228 },
-                    { lat: 44.682480, lng: -79.248500 },
-                    { lat: 44.682801, lng: -79.248560 },
-                    { lat: 44.682918, lng: -79.248492 },
-                    { lat: 44.683099, lng: -79.248459 },
-                    { lat: 44.683780, lng: -79.248600 },
-                    { lat: 44.683027, lng: -79.251746 },
-                    { lat: 44.682984, lng: -79.251925 },
-                    { lat: 44.679081, lng: -79.250174 }
-                ];
-                var boundaryCoords5 = [
-                    { lat: 44.683027, lng: -79.251746 },
-                    { lat: 44.683356, lng: -79.251894 },
-                    { lat: 44.683569, lng: -79.252203 },
-                    { lat: 44.683579, lng: -79.252293 },
-                    { lat: 44.684235, lng: -79.253161 },
-                    { lat: 44.684629, lng: -79.252404 },
-                    { lat: 44.684810, lng: -79.251958 },
-                    { lat: 44.684778, lng: -79.251438 },
-                    { lat: 44.684961, lng: -79.250873 },
-                    { lat: 44.685127, lng: -79.250282 },
-                    { lat: 44.686105, lng: -79.249521 },
-                    { lat: 44.686352, lng: -79.249211 },
-                    { lat: 44.686815, lng: -79.248435 },
-                    { lat: 44.687011, lng: -79.248528 },
-                    { lat: 44.688782, lng: -79.249343 },
-                    { lat: 44.689614, lng: -79.245504 },
-                    { lat: 44.690369, lng: -79.245861 },
-                    { lat: 44.690607, lng: -79.244756 },
-                    { lat: 44.698469, lng: -79.248463 },
-                    { lat: 44.697449, lng: -79.253210 },
-                    { lat: 44.697431, lng: -79.253294 },
-                    { lat: 44.696474, lng: -79.257732 },
-                    { lat: 44.696381, lng: -79.258172 },
-                    { lat: 44.692069, lng: -79.256120 },
-                    { lat: 44.691011, lng: -79.261031 },
-                    { lat: 44.686670, lng: -79.259002 },
-                    { lat: 44.683353, lng: -79.257530 },
-                    { lat: 44.682335, lng: -79.257041 },
-                    { lat: 44.683455, lng: -79.252137 },
-                    { lat: 44.682984, lng: -79.251925 }
-                ];
-                var boundaryCoords6 = [
-                    { lat: 44.679081, lng: -79.250174 },
-                    { lat: 44.682984, lng: -79.251925 },
-                    { lat: 44.683455, lng: -79.252137 },
-                    { lat: 44.682335, lng: -79.257041 },
-                    { lat: 44.683353, lng: -79.257530 },
-                    { lat: 44.686670, lng: -79.259002 },
-                    { lat: 44.685613, lng: -79.263841 },
-                    { lat: 44.685613, lng: -79.263841 },
-                    { lat: 44.681899, lng: -79.262158 },
-                    { lat: 44.679878, lng: -79.261234 },
-                    { lat: 44.676865, lng: -79.259864 },
-                    { lat: 44.677972, lng: -79.255028 }
-                ];
+    <!-- Heading Below Image -->
+    
+    <p class="text-center text-lg  mb-8" style="color: white;">
+        Συμπληρώστε τα στοιχεία σας, επιλέξτε πακέτο υπηρεσιών, τρόπο πληρωμής, και προχωρήστε στην πληρωμή
+    </p>
 
-                // Combine all boundary coordinates
-                var allBoundaryCoords = [
-                    boundaryCoords1,
-                    boundaryCoords2,
-                    boundaryCoords3,
-                    boundaryCoords4,
-                    boundaryCoords5,
-                    boundaryCoords6
-                ];
+    <!-- Form -->
+    <div class="bg-white shadow-lg rounded-lg p-8" style="background-color:rgb(238, 218, 197);color: white;">
+      <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Υποβάλετε τα στοιχεία σας</h3>
+      <form id="webhookForm" class="space-y-6">
+        <!-- Email -->
+        <label class="block text-gray-700 font-medium">
+          Email <span class="text-red-500">*</span>
+          <input type="email" id="email" name="email" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </label>
 
-                // Calculate bounds for all boundary coordinates
-                var bounds = new google.maps.LatLngBounds();
-                allBoundaryCoords.forEach(function(coords) {
-                    coords.forEach(function(coord) {
-                        bounds.extend(new google.maps.LatLng(coord.lat, coord.lng));
-                    });
-                });
+        <!-- VAT -->
+        <label class="block text-gray-700 font-medium">
+          Εταιρικό ΑΦΜ για το τιμολόγιο σας (EL + 10 ψηφία) <span class="text-red-500">*</span>
+          <input type="text" id="vat" name="vat" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </label>
 
-                // Fit map to all boundary coordinates
-                map.fitBounds(bounds);
+        <!-- Company Name -->
+        <label class="block text-gray-700 font-medium">
+          Επωνυμία επιχείρησης <span class="text-red-500">*</span>
+          <input type="text" id="companyName" name="companyName" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </label>
 
-                // Draw boundary lines
-                allBoundaryCoords.forEach(function(coords, index) {
-                    var boundary = new google.maps.Polyline({
-                        path: coords,
-                        geodesic: true,
-                        strokeColor: ['#00FFFF', '#FFFF00', '#FFA500', '#FFFF00', '#FF0000', '#00FFFF'][index], // Different color for each boundary
-                        strokeOpacity: 1.0,
-                        strokeWeight: 1
-                    });
-                    boundary.setMap(map);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+        <!-- Address -->
+        <label class="block text-gray-700 font-medium">
+          Διεύθυνση (Οδός και Αριθμός) <span class="text-red-500">*</span>
+          <input type="text" id="address" name="address" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </label>
+
+        <!-- City -->
+        <label class="block text-gray-700 font-medium">
+          Πόλη <span class="text-red-500">*</span>
+          <input type="text" id="city" name="city" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </label>
+
+        <!-- Postal Code -->
+        <label class="block text-gray-700 font-medium">
+          Ταχυδρομικός Κώδικας <span class="text-red-500">*</span>
+          <input type="text" id="postalCode" name="postalCode" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </label>
+
+        <!-- Amount -->
+        <label class="block text-gray-700 font-medium">
+            Εκπαιδευτική υπηρεσία στην οποία αφορά η πληρωμή σας <span class="text-red-500">*</span>
+          <select type="select" id="amount" name="service" 
+            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            min="0" step="0.01" required>9
+            <option value="Elite">Elite</option>
+            <option value="Εργαστήρι">Εργαστήρι</option>
+            <option value="Ανανέωση συνδρομής υπηρεσιών καθοδήγησης, εξυπηρέτησης & τεχνικής υποστήριξης" >Ανανέωση συνδρομής υπηρεσιών καθοδήγησης, εξυπηρέτησης & τεχνικής υποστήριξης</option>
+          </select>
+        </label>
+
+        <fieldset class="mt-4">
+            <legend class="block text-gray-700 font-medium">
+              Τι πληρώνετε: <span class="text-red-500">*</span>
+            </legend>
+            <div class="flex flex-col items-start space-y-2 mt-2">
+              <label class="flex items-center">
+                <input
+                  type="radio"
+                  id="Εξόφληση"
+                  name="payment_option"
+                  value="Εξόφληση"
+                  class="text-blue-500 focus:ring-blue-500"
+                  required
+                />
+                <span class="ml-2 text-gray-700">Εξόφληση</span>
+              </label>
+              <label class="flex items-center">
+                <input
+                  type="radio"
+                  id="1η δόση"
+                  name="payment_option"
+                  value="1η δόση"
+                  class="text-blue-500 focus:ring-blue-500"
+                  required
+                />
+                <span class="ml-2 text-gray-700">1η δόση</span>
+              </label>
+              <label class="flex items-center">
+                <input
+                  type="radio"
+                  id="2η δόση"
+                  name="payment_option"
+                  value="2η δόση"
+                  class="text-blue-500 focus:ring-blue-500"
+                  required
+                />
+                <span class="ml-2 text-gray-700">2η δόση</span>
+              </label>
+              <label class="flex items-center">
+                <input
+                  type="radio"
+                  id="3η δόση"
+                  name="payment_option"
+                  value="3η δόση"
+                  class="text-blue-500 focus:ring-blue-500"
+                  required
+                />
+                <span class="ml-2 text-gray-700">3η δόση</span>
+              </label>
+            </div>
+          </fieldset>          
+
+        <!--Ποσό σε ευρώ (αντιστοιχεί στο ποσό που γράφει η προσφορά που έχετε λάβει) -->
+        <label class="block text-gray-700 font-medium">
+            Ποσό σε ευρώ (αντιστοιχεί στο ποσό που γράφει η προσφορά που έχετε λάβει) <span class="text-red-500">*</span>
+            <input type="text" id="Amount" name="Amount" 
+              class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </label>
+
+        <!-- Payment Method -->
+        <fieldset class="mt-4">
+          <legend class="block text-gray-700 font-medium">Τρόπος πληρωμής: <span class="text-red-500">*</span></legend>
+          <div class="flex items-center space-x-4 mt-2">
+            <label class="flex items-center">
+              <input type="radio" id="cardPayment" name="paymentMethod" value="card" 
+                class="text-blue-500 focus:ring-blue-500" required>
+              <span class="ml-2 text-gray-700">Πληρωμή με κάρτα</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" id="bankTransfer" name="paymentMethod" value="bank" 
+                class="text-blue-500 focus:ring-blue-500" required>
+              <span class="ml-2 text-gray-700">Κατάθεση σε λογαριασμό Τράπεζας Revolute</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Proof Upload Section -->
+        <div id="proofUpload" style="display: none;" class="mt-4">
+            <label class="block text-gray-700 font-medium">
+            Φορτώστε αποδεικτικό <span class="text-red-500">*</span>
+            </label>
+            <br>
+            <div class="relative flex items-center justify-center border-dashed border-2 border-gray-300 p-4 rounded-lg bg-gray-50">
+            <input
+                type="file"
+                id="proof"
+                name="proof"
+                accept=".pdf, image/*"
+                class="absolute inset-0 opacity-0 cursor-pointer"
+                required
+            />
+            <div id="fileDisplay" class="text-center">
+                <p class="text-gray-500 font-medium">Drag & drop your file here or click to upload</p>
+                <p class="text-sm text-gray-400">Accepted formats: .pdf, images</p>
+            </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-6 text-center">
+          <button type="submit" 
+            class="px-6 py-3 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color: rgba(150, 111, 40, 0.845)">
+            Υποβολή
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('webhookForm');
+    const proofUpload = document.getElementById('proofUpload');
+    const cardPayment = document.getElementById('cardPayment');
+    const bankTransfer = document.getElementById('bankTransfer');
+    const proofField = document.getElementById('proof');
+    const fileDisplay = document.getElementById('fileDisplay');
+  
+    form.addEventListener('change', function () {
+      if (bankTransfer.checked) {
+        proofUpload.style.display = 'block';
+        proofField.setAttribute('required', 'required');
+      } else {
+        proofUpload.style.display = 'none';
+        proofField.removeAttribute('required');
+      }
+    });
+  
+    proofField.addEventListener('change', function () {
+      if (proofField.files.length > 0) {
+        const fileName = proofField.files[0].name;
+        fileDisplay.innerHTML = `
+          <p class="text-gray-700 font-medium">Selected file:</p>
+          <p class="text-gray-900 font-semibold">${fileName}</p>
+        `;
+      } else {
+        fileDisplay.innerHTML = `
+          <p class="text-gray-500 font-medium">Drag & drop your file here or click to upload</p>
+          <p class="text-sm text-gray-400">Accepted formats: .pdf, images</p>
+        `;
+      }
+    });
+  
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const webhookUrl = 'https://hook.eu2.make.com/1s1nsmxzts8xivpn3amg7g2qddnqo9qc';
+  
+      try {
+        // Trigger webhook before redirect
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          body: formData
+        });
+  
+        if (response.ok) {
+          // Redirect based on the selected payment option
+          if (cardPayment.checked) {
+            window.location.href = 'https://checkout.revolut.com/pay/cf7eb2fb-506d-45f3-b1cd-96e5e0ed635b';
+          } else if (bankTransfer.checked && proofField.files.length > 0) {
+            // Redirect with no delay after successful webhook for bank transfer
+            window.location.href = 'https://abhinavkm.github.io/thankyou-page/'; // Adjust to your desired URL
+          }
+        } else {
+          console.error('Webhook failed:', response.statusText);
         }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEO0_2kf8146iPb4DiTgSZqgsMCtQYktQ&callback=initMap" async defer></script>
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+  </script>
+    
 </body>
 </html>
